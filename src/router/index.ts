@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import {createRouter, createWebHashHistory, RouteRecordRaw} from "vue-router";
 
 export const Layout = () => import("@/layout/index.vue");
 
@@ -21,6 +21,11 @@ export const constantRoutes: RouteRecordRaw[] = [
     component: () => import("@/views/login/index.vue"),
     meta: { hidden: true },
   },
+  /*  {
+      path: "/pay",
+      component: () => import("@/views/system/pay/index.vue"),
+      meta: { hidden: true },
+    },*/
 
   {
     path: "/index",

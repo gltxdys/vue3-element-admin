@@ -17,3 +17,14 @@ export const enum SizeEnum {
    */
   SMALL = "small",
 }
+
+export const enum PayType {
+  // DEFAULT = {
+  //   name: "Alipay",
+  //   value: 1,
+  // },
+  // WECHAT = {
+  //   name: "WeChat",
+  //   value: 2,
+  // },
+}

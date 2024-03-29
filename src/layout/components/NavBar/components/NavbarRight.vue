@@ -32,12 +32,9 @@
       </div>
       <template #dropdown>
         <el-dropdown-menu>
-          <a
-            target="_blank"
-            href="https://gitee.com/youlaiorg/vue3-element-admin"
-          >
-            <el-dropdown-item>{{ $t("navbar.gitee") }}</el-dropdown-item>
-          </a>
+          <router-link to="/index">
+            <el-dropdown-item>{{ $t("navbar.index") }}</el-dropdown-item>
+          </router-link>
           <a target="_blank" href="https://juejin.cn/post/7228990409909108793">
             <el-dropdown-item>{{ $t("navbar.document") }}</el-dropdown-item>
           </a>
@@ -57,14 +54,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import {
-  useAppStore,
-  useTagsViewStore,
-  useUserStore,
-  useSettingsStore,
-} from "@/store";
+import {useAppStore, useSettingsStore, useTagsViewStore, useUserStore,} from "@/store";
 import defaultSettings from "@/settings";
-import { DeviceEnum } from "@/enums/DeviceEnum";
+import {DeviceEnum} from "@/enums/DeviceEnum";
 
 const appStore = useAppStore();
 const tagsViewStore = useTagsViewStore();

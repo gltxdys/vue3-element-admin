@@ -6,7 +6,7 @@ const tableData = [
     price: "3积分",
     test: "立即测试",
   },
-]
+];
 </script>
 
 <template>
@@ -65,7 +65,12 @@ const tableData = [
           <el-table :data="tableData" border style="width: 100%">
             <el-table-column label="类型" prop="type" width="80" align="center" />
             <el-table-column label="描述" prop="desc" align="center" />
-            <el-table-column label="价格" prop="price" width="80" align="center" />
+            <el-table-column
+              label="价格"
+              prop="price"
+              width="80"
+              align="center"
+            />
             <el-table-column
               label="测试"
               prop="test"
@@ -149,6 +154,7 @@ const tableData = [
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 100px;
 }
 #captcha-type {
   width: 60%;

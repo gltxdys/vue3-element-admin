@@ -105,23 +105,23 @@
     <!-- ICP备案 -->
     <div class="absolute bottom-1 text-[10px] text-center" v-show="icpVisible">
       <p>
-        Copyright © 2021 - 2024 youlai.tech All Rights Reserved. 有来技术
+        Copyright © 2021 - 2024 i@lovejj.tk All Rights Reserved.
         版权所有
       </p>
-      <p>皖ICP备20006496号-3</p>
+      <p>鄂ICP备20230120号</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useSettingsStore, useUserStore } from "@/store";
-import { getCaptchaApi } from "@/api/auth";
-import { LoginData } from "@/api/auth/types";
-import { Sunny, Moon } from "@element-plus/icons-vue";
-import { LocationQuery, LocationQueryValue, useRoute } from "vue-router";
+import {useSettingsStore, useUserStore} from "@/store";
+import {getCaptchaApi} from "@/api/auth";
+import {LoginData} from "@/api/auth/types";
+import {Moon, Sunny} from "@element-plus/icons-vue";
+import {LocationQuery, LocationQueryValue, useRoute} from "vue-router";
 import router from "@/router";
 import defaultSettings from "@/settings";
-import { ThemeEnum } from "@/enums/ThemeEnum";
+import {ThemeEnum} from "@/enums/ThemeEnum";
 
 // Stores
 const userStore = useUserStore();
