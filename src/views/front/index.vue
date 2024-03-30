@@ -1,9 +1,10 @@
 <script lang="ts">
-import { defineComponent } from "vue";
-import { House } from "@element-plus/icons-vue";
+import {defineComponent} from "vue";
+import {House} from "@element-plus/icons-vue";
 import Navbar from "@/views/front/navbar.vue";
 import FrontMain from "@/views/front/front-main.vue";
 import MyFooter from "@/views/common/my-footer.vue";
+
 export default defineComponent({
   name: "index",
   // eslint-disable-next-line vue/no-unused-components
@@ -43,6 +44,6 @@ export default defineComponent({
   width: 80%;
   height: 85%;
   flex: 1;
-  margin-top: 5%;
+  margin-top: 100px;
 }
 </style>

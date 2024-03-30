@@ -85,7 +85,7 @@
       <div class="img_div" v-if="repUrl">
         <img :src="repUrl" style=""/>
       </div>
-      <h v-if="result">识别结果：{{ result }}</h>
+      <p v-if="result">识别结果：{{ result }}</p>
       <div class="button_div">
         <el-button round type="primary" @click="checkPic">识别</el-button>
       </div>
@@ -95,6 +95,7 @@
 
 <script setup lang="ts">
 import {checkGeetest3ByUrl} from "@/api/check";
+import {identifyVo} from "@/api/check/types";
 
 const tableData = [
   {
@@ -108,15 +109,12 @@ const isTest = ref(false);
 const testUrl = ref("");
 const result = ref("");
 const repUrl = ref("");
-const identifyVo = ref({
-  picUrl: "",
-  restult: "",
-});
+const identifyVo = ref<identifyVo>();
 
 function checkPic() {
   checkGeetest3ByUrl(testUrl.value).then((res) => {
-    repUrl.value = res.data.picUrl;
-    result.value = res.data.result;
+    repUrl.value = <string>res.data.picUrl;
+    result.value = <string>res.data.result;
   });
 }
 
@@ -132,7 +130,6 @@ watch(testUrl, (newValue, oldValue) => {
 #guide-contain {
   width: 60%;
   margin-left: 20%;
-  margin-top: 30px;
   flex-direction: column;
 }
 
@@ -166,7 +163,7 @@ watch(testUrl, (newValue, oldValue) => {
   justify-content: center;
   align-items: center;
   row-gap: 20px;
-  gap: 30px;
+  gap: 20px;
 
   .button_div {
     flex-basis: 100%;
@@ -179,6 +176,12 @@ watch(testUrl, (newValue, oldValue) => {
 
   .test-upload {
     width: 300px;
+  }
+
+  p {
+    width: 100%;
+    text-align: center;
+    height: 10px;
   }
 }
 

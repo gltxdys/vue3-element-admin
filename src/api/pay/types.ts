@@ -10,7 +10,7 @@ export interface PreCreateVo {
   /**
    * 支付id
    */
-  tradeNo?: string;
+  tradeNo?: number;
   /**
    * 二维码base64
    */

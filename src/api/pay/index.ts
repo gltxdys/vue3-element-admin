@@ -14,6 +14,13 @@ export function getPreCreateResult(money?: number): AxiosPromise<PreCreateVo> {
   });
 }
 
+export function getTradeResult(tradeNo?: number): AxiosPromise<boolean> {
+  return request({
+    url: "/api/v1/pay/getTradeResult?tradeNo=" + tradeNo,
+    method: "get",
+  });
+}
+
 export function getTradeList(
   tradeQuery?: TradeQuery
 ): AxiosPromise<TradePageResult> {
