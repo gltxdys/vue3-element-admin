@@ -8,12 +8,16 @@
         highlight-current-row
         border
       >
-        <el-table-column label="订单编号" prop="id" width="100"/>
-        <el-table-column label="识别类型" prop="typeId" min-width="160"/>
-        <el-table-column label="图片" prop="picId" width="150"/>
-        <el-table-column label="积分" prop="score" width="150"/>
-        <el-table-column label="下单时间" prop="createTime" min-width="160"/>
-        <el-table-column label="识别结果" prop="result" min-width="160"/>
+        <el-table-column label="订单编号" prop="id" width="100" align="center"/>
+        <el-table-column label="识别类型" prop="typeId" min-width="160" align="center"/>
+        <el-table-column label="图片" prop="picUrl" min-width="150" align="center">
+          <template #default="scope">
+            <img :src="scope.row.picUrl" class="small-img"/>
+          </template>
+        </el-table-column>
+        <el-table-column label="积分" prop="score" width="150" align="center"/>
+        <el-table-column label="下单时间" prop="createTime" min-width="160" align="center"/>
+        <el-table-column label="识别结果" prop="result" min-width="160" align="center"/>
         <el-table-column label="状态" align="center" width="100">
           <template #default="scope">
             <el-tag v-if="scope.row.status === 1" type="success">正常</el-tag>
@@ -59,4 +63,9 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.small-img {
+  width: 50%;
+  height: auto; /* 保持纵横比例 */
+}
+</style>

@@ -1,143 +1,32 @@
-<script setup lang="ts">
-const tableData = [
-  {
-    type: "10001",
-    desc: "Geetest3 文字点选验证",
-    price: "3积分",
-    test: "立即测试",
-  },
-];
-</script>
-
 <template>
   <div id="demo-contain">
     <div id="captcha-type">
-      <el-row :gutter="20">
-        <el-col :span="4"><span>点选类型</span></el-col>
-        <el-col :span="4"><span>滑动类型</span></el-col>
-        <el-col :span="4"><span>旋转类型</span></el-col>
-        <el-col :span="4"><span>谷歌验证</span></el-col>
-        <el-col :span="4"><span>数字类型</span></el-col>
-        <el-col :span="4"><span>字母类型</span></el-col>
-        <el-col :span="4"><span>空间推理</span></el-col>
-      </el-row>
+      <el-radio-group v-model="showType" size="large" @change="changeShowList">
+        <el-radio-button label="全部类型" value="0"/>
+        <el-radio-button label="文字点选" value="1"/>
+        <el-radio-button label="图标点选" value="2"/>
+      </el-radio-group>
     </div>
-    <div id="captcha-contain">
+    <div id="captcha-contain" v-for="(item, index) in showList" :key="index">
       <div class="captcha-box">
-        <h3>geetest3-文字点选</h3>
+        <h3>{{ item.typeName }}</h3>
         <div class="img-box">
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
+          <img v-for="pic in item.exampleUrl" :src="pic"/>
         </div>
         <div>
-          <el-table :data="tableData" border style="width: 100%">
-            <el-table-column label="类型" prop="type" width="80" align="center" />
-            <el-table-column label="描述" prop="desc" align="center" />
+          <el-table :data="getArray(item)" border style="width: 100%">
+            <el-table-column label="类型" prop="typeId" width="80" align="center"/>
+            <el-table-column label="描述" prop="details" align="center"/>
             <el-table-column label="价格" prop="price" width="80" align="center" />
             <el-table-column
               label="测试"
-              prop="test"
+              prop="details"
               width="100"
               align="center"
             >
               <template v-slot="scope">
-                <router-link :to="'/guide/' + scope.row.type">
-                  <span style="color: #67c23a">{{ scope.row.test }}</span>
-                </router-link>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </div>
-      <div class="captcha-box">
-        <h3>geetest3-文字点选</h3>
-        <div class="img-box">
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-        </div>
-        <div>
-          <el-table :data="tableData" border style="width: 100%">
-            <el-table-column label="类型" prop="type" width="80" align="center" />
-            <el-table-column label="描述" prop="desc" align="center" />
-            <el-table-column
-              label="价格"
-              prop="price"
-              width="80"
-              align="center"
-            />
-            <el-table-column
-              label="测试"
-              prop="test"
-              width="100"
-              align="center"
-            >
-              <template v-slot="scope">
-                <router-link :to="'/guide/' + scope.row.type">
-                  <span style="color: #67c23a">{{ scope.row.test }}</span>
-                </router-link>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </div>
-      <div class="captcha-box">
-        <h3>geetest3-文字点选</h3>
-        <div class="img-box">
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-        </div>
-        <div>
-          <el-table :data="tableData" border style="width: 100%">
-            <el-table-column label="类型" prop="type" width="80" align="center" />
-            <el-table-column label="描述" prop="desc" align="center" />
-            <el-table-column label="价格" prop="price" width="80" align="center" />
-            <el-table-column
-              label="测试"
-              prop="test"
-              width="100"
-              align="center"
-            >
-              <template v-slot="scope">
-                <router-link :to="'/guide/' + scope.row.type">
-                  <span style="color: #67c23a">{{ scope.row.test }}</span>
-                </router-link>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </div>
-      <div class="captcha-box">
-        <h3>geetest3-文字点选</h3>
-        <div class="img-box">
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-          <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg" />
-        </div>
-        <div>
-          <el-table :data="tableData" border style="width: 100%">
-            <el-table-column label="类型" prop="type" width="80" align="center" />
-            <el-table-column label="描述" prop="desc" align="center" />
-            <el-table-column label="价格" prop="price" width="80" align="center" />
-            <el-table-column
-              label="测试"
-              prop="test"
-              width="100"
-              align="center"
-            >
-              <template v-slot="scope">
-                <router-link :to="'/guide/' + scope.row.type">
-                  <span style="color: #67c23a">{{ scope.row.test }}</span>
+                <router-link :to="'guide/?type=' + scope.row.typeId">
+                  <span style="color: #67c23a">立即测试</span>
                 </router-link>
               </template>
             </el-table-column>
@@ -148,13 +37,51 @@ const tableData = [
   </div>
 </template>
 
+<script setup lang="ts">
+import {captchaTypeApi} from "@/api/captcha";
+import {CaptchaTypeVo} from "@/api/captcha/types";
+
+let showType = ref("0");
+let captchaTypeList = ref<CaptchaTypeVo[]>([]);
+let showList = ref<CaptchaTypeVo[]>([]);
+
+function getCaptchaType() {
+  captchaTypeApi().then(({data}) => {
+    captchaTypeList.value = data;
+    showList.value = data;
+  });
+}
+
+function getArray(item: CaptchaTypeVo) {
+  return [item];
+}
+
+function changeShowList() {
+  showList.value = [];
+  let type = parseInt(showType.value);
+  if (type == 0) {
+    showList.value = captchaTypeList.value;
+  } else {
+    captchaTypeList.value.forEach((item) => {
+      if (Math.floor((item.typeId / 10) % 10) == type) {
+        showList.value.push(item);
+      }
+    });
+  }
+}
+
+onMounted(() => {
+  getCaptchaType();
+});
+</script>
+
 <style scoped lang="scss">
 #demo-contain {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 100px;
+  padding-bottom: 50px;
 }
 #captcha-type {
   width: 60%;
@@ -199,7 +126,7 @@ const tableData = [
   border: 1px solid #dedede;
   padding: 2px;
   img {
-    max-width: 23%;
+    max-width: 200px;
     height: auto;
     padding: 2px;
     border-radius: 4px;

@@ -1,7 +1,5 @@
 <!--
   多图上传组件
-  @author: youlaitech
-  @date 2022/11/20
 -->
 
 <template>
@@ -23,14 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import {
-  UploadRawFile,
-  UploadRequestOptions,
-  UploadUserFile,
-  UploadFile,
-  UploadProps,
-} from "element-plus";
-import { uploadFileApi, deleteFileApi } from "@/api/file";
+import {UploadFile, UploadProps, UploadRawFile, UploadRequestOptions, UploadUserFile,} from "element-plus";
+import {deleteFileApi, uploadFileApi} from "@/api/file";
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -47,7 +39,7 @@ const props = defineProps({
    */
   limit: {
     type: Number,
-    default: 10,
+    default: 3,
   },
 });
 

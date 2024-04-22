@@ -1,7 +1,7 @@
 <template>
   <div id="guide-contain">
     <el-switch
-      style="display: block"
+      style="display: flex"
       v-model="isTest"
       active-color="#13ce66"
       inactive-color="#ff4949"
@@ -9,74 +9,33 @@
       inactive-text="查看文档"
     />
     <div class="img-contain">
-      <h3>geetest3-文字点选</h3>
+      <h3>{{ captchaDetail?.typeName }}</h3>
       <div class="img-box">
-        <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg"/>
-        <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg"/>
-        <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg"/>
-        <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg"/>
-        <img src="https://www.jfbym.com/static/pic/dx/wzdx1/1.jpg"/>
+        <img v-for="pic in urls" :src="pic"/>
       </div>
     </div>
     <div class="doc-box" v-if="!isTest">
       <div class="doc-table">
         <h4>请求参数</h4>
-        <el-table :data="tableData" border style="width: 100%">
-          <el-table-column label="类型" prop="type" width="80" align="center"/>
-          <el-table-column label="描述" prop="desc" align="center"/>
-          <el-table-column
-            label="价格"
-            prop="price"
-            width="80"
-            align="center"
-          />
-          <el-table-column label="测试" prop="test" width="100" align="center">
-            <template #default="scope">
-              <router-link :to="'/guide/' + scope.row.type">
-                <span style="color: #67c23a">{{ scope.row.test }}</span>
-              </router-link>
-            </template>
-          </el-table-column>
+        <el-table :data="captchaDetail?.reqParam" border style="width: 100%">
+          <el-table-column label="参数名称" prop="name" width="100" align="center"/>
+          <el-table-column label="参数说明" prop="value" min-width="180" align="center"/>
+          <el-table-column label="参数类型" prop="type" width="100" align="center"/>
         </el-table>
       </div>
       <div class="doc-table">
-        <h4>返回参数</h4>
-        <el-table :data="tableData" border style="width: 100%">
-          <el-table-column label="类型" prop="type" width="80" align="center"/>
-          <el-table-column label="描述" prop="desc" align="center"/>
-          <el-table-column
-            label="价格"
-            prop="price"
-            width="80"
-            align="center"
-          />
-          <el-table-column label="测试" prop="test" width="100" align="center">
-            <template #default="scope">
-              <router-link :to="'/guide/' + scope.row.type">
-                <span style="color: #67c23a">{{ scope.row.test }}</span>
-              </router-link>
-            </template>
-          </el-table-column>
+        <h4>响应参数</h4>
+        <el-table :data="repData" border style="width: 100%">
+          <el-table-column label="参数名称" prop="name" width="100" align="center"/>
+          <el-table-column label="参数说明" prop="value" min-width="180" align="center"/>
+          <el-table-column label="参数类型" prop="type" width="100" align="center"/>
         </el-table>
       </div>
       <div class="doc-table">
         <h4>响应代码</h4>
-        <el-table :data="tableData" border style="width: 100%">
-          <el-table-column label="类型" prop="type" width="80" align="center"/>
-          <el-table-column label="描述" prop="desc" align="center"/>
-          <el-table-column
-            label="价格"
-            prop="price"
-            width="80"
-            align="center"
-          />
-          <el-table-column label="测试" prop="test" width="100" align="center">
-            <template #default="scope">
-              <router-link :to="'/guide/' + scope.row.type">
-                <span style="color: #67c23a">{{ scope.row.test }}</span>
-              </router-link>
-            </template>
-          </el-table-column>
+        <el-table :data="codeData" border style="width: 100%">
+          <el-table-column label="代码" prop="name" width="80" align="center"/>
+          <el-table-column label="描述" prop="value" align="center"/>
         </el-table>
       </div>
     </div>
@@ -95,29 +54,52 @@
 
 <script setup lang="ts">
 import {checkGeetest3ByUrl} from "@/api/check";
-import {identifyVo} from "@/api/check/types";
+import {useRoute} from "vue-router";
+import {captchaTypeByIdApi} from "@/api/captcha";
+import {CaptchaType} from "@/api/captcha/types";
+import {CodeData, RepData} from "../../../mock/code";
 
+const route = useRoute();
 const tableData = [
   {
     type: "10001",
     desc: "Geetest3 文字点选验证",
     price: "3积分",
-    test: "立即测试",
+    test: true,
   },
 ];
+const repData = RepData;
+const codeData = CodeData;
+let captchaDetail = ref<CaptchaType>();
+let typeId = ref();
 const isTest = ref(false);
 const testUrl = ref("");
 const result = ref("");
 const repUrl = ref("");
-const identifyVo = ref<identifyVo>();
-
+let urls = ref<string[]>();
 function checkPic() {
-  checkGeetest3ByUrl(testUrl.value).then((res) => {
+  checkGeetest3ByUrl(testUrl.value, typeId.value).then((res) => {
     repUrl.value = <string>res.data.picUrl;
     result.value = <string>res.data.result;
   });
 }
 
+function initGuide(id: number) {
+  captchaTypeByIdApi(id).then(({data}) => {
+    captchaDetail.value = data;
+    urls.value = data.exampleUrl;
+  });
+}
+
+onMounted(() => {
+  let type = route.query.type;
+  if (type == null) {
+    initGuide(1011);
+  } else {
+    typeId.value = type;
+    initGuide(typeId.value);
+  }
+});
 // 监听 repurl 变化
 watch(testUrl, (newValue, oldValue) => {
   console.log("testUrl 值变化了！新值为：", newValue);
@@ -131,6 +113,7 @@ watch(testUrl, (newValue, oldValue) => {
   width: 60%;
   margin-left: 20%;
   flex-direction: column;
+  padding-bottom: 50px;
 }
 
 .img-contain {
@@ -203,6 +186,12 @@ watch(testUrl, (newValue, oldValue) => {
   img {
     width: 100%;
     border-radius: 4px;
+  }
+}
+
+:deep(.el-table) {
+  .el-table__row:nth-child(even) {
+    background-color: #f2f2f2; /* 你想要的偶数行背景色 */
   }
 }
 </style>

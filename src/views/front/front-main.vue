@@ -31,9 +31,13 @@
         </el-col>
       </el-row>
     </div>
-    <div style="flex: 100%; text-align: center; margin-top: 50px">
-      <el-button color="#a3d19e">查看例子</el-button>
-      <el-button color="#a3d19e">查看文档</el-button>
+    <div class="span_box">
+      <router-link to="/index/demo">
+        <el-button color="#a3d19e">查看例子</el-button>
+      </router-link>
+      <router-link to="/index/guide">
+        <el-button color="#a3d19e">查看文档</el-button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -56,5 +60,18 @@
   border-color: #a3d19e !important;
   color: #a3d19e !important;
   opacity: 0.8;
+}
+
+.span_box {
+  flex: 100%;
+  display: flex;
+  text-align: center;
+  margin-top: 50px;
+  justify-content: center;
+  gap: 30px;
+
+  a {
+    display: block;
+  }
 }
 </style>
